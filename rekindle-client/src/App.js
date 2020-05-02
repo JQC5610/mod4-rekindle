@@ -60,6 +60,40 @@ getMyTopTracks = () => {
     })
 };
 
+getMySavedTracks = () => {
+  // there should be a generate playlist button.
+  // The logic should be to check if a users data is in the db already Skip over this is it is.
+  // The getMySaved Tracks should run until the dateadded is in 2016
+  spotify.getMySavedTracks({limit: 50})
+  .then((response) => {
+    console.log(response)
+    console.log(response.items[0].track.name)
+    console.log(response.items[0].track.artists[0].name)
+    console.log(response.items[0].track.uri)
+    console.log(response.items[0].added_at)
+    this.postSongs(response)
+  })
+}
+
+postSongs = (response) => {
+  
+  for (let i=0; i < 50; i++) { 
+  fetch (`http://localhost:3001/songs`, {
+  method: 'POST',
+  headers: {'content-Type': 'application/json',
+              "accept": "application/json"
+  },
+  body: JSON.stringify({
+      "name": response.items[i].track.name,
+      "artist": response.items[i].track.artists[0].name,
+      "uri": response.items[i].track.uri,
+      "favorite_date": response.items[i].added_at
+    })
+  })
+ }
+}
+
+
 render() {
   return (
     <div className="App">
@@ -81,6 +115,10 @@ render() {
       <button onClick={() => this.getMyTopTracks()}>
         Top Tracks
       </button>
+      <button onClick={() => this.getMySavedTracks()}>
+        Saved Tracks
+      </button>
+
 
 
     </div> 
