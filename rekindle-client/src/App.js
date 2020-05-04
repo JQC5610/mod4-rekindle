@@ -1,26 +1,31 @@
 import React, { Component } from "react";
 import './App.css';
+import { Timeline, Event } from 'react-trivial-timeline';
+
+
 import * as SpotifyWebApi from 'spotify-web-api-js';
 
 let spotify = new SpotifyWebApi();
+
+
 
 class App extends React.Component {
   constructor(){
     super();
     const params = this.getHashParams();
-
+    if (params.access_token) {
+      spotify.setAccessToken(params.access_token)
+    }
     this.state = {
       loggedIn: params.access_token ? true : false,
       nowPlaying: {
         name: "Not Checked",
         image: ''
       }
-    }
-    if (params.access_token) {
-      spotify.setAccessToken(params.access_token)
-    }
-  }
+    };
 
+  }
+  
 
 
 
@@ -28,7 +33,7 @@ getHashParams = () => {
   var hashParams = {};
   var e, r = /([^&;=]+)=?([^&;]*)/g,
       q = window.location.hash.substring(1);
-  while ( e = r.exec(q)) {
+  while (e = r.exec(q)) {
      hashParams[e[1]] = decodeURIComponent(e[2]);
   }
   return hashParams;
@@ -96,35 +101,39 @@ postSongs = (response) => {
 
 render() {
   return (
-    <div className="App">
-      <a href='http://localhost:8888'>
-        <button>Login with Spotify</button>
-      </a>
-      <div>
-        Now Playing: { this.state.nowPlaying.name } 
-      </div>
-      <div>
-        <img src = {this.state.nowPlaying.image} style={{ width: 100}}/>
-      </div>
-      <button onClick={() => this.getNowPlaying()}>
-        Now Playing
-      </button>
-      <button onClick={() => this.getRecentlyPlayed()}>
-        Recent Songs
-      </button>
-      <button onClick={() => this.getMyTopTracks()}>
-        Top Tracks
-      </button>
-      <button onClick={() => this.getMySavedTracks()}>
-        Saved Tracks
-      </button>
-
-
-
-    </div> 
+      <div className="App">
+        <a href='http://localhost:8888'>
+          <button>Login with Spotify</button>
+        </a>
+          <div>
+            Now Playing: { this.state.nowPlaying.name } 
+          </div>
+          <div>
+            <img src = {this.state.nowPlaying.image} style={{ width: 100}}/>
+          </div>
+          <button onClick={() => this.getNowPlaying()}>
+            Now Playing
+          </button>
+          <button onClick={() => this.getRecentlyPlayed()}>
+            Recent Songs
+          </button>
+          <button onClick={() => this.getMyTopTracks()}>
+            Top Tracks
+          </button>
+          <button onClick={() => this.getMySavedTracks()}>
+            Saved Tracks
+          </button>
+        <Timeline lineColor="black">
+          <Event interval={{ start: 2010 }} title="Event title" subtitle="Subtitle">
+            Content
+          </Event>
+          <Event interval="2016 – 2019" title="Some text">
+            Some content
+          </Event>
+      </Timeline>
+      </div> 
   );
-}
-
+  }
 }
 
 export default App;
