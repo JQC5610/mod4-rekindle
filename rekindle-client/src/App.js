@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import './App.css';
-import TimelineContainer from './TimelineContainer'
-
+import TimelineContainer from './TimelineContainer';
+import SongContainer from './SongContainer';
 import * as SpotifyWebApi from 'spotify-web-api-js';
 
 let spotify = new SpotifyWebApi();
@@ -17,12 +17,14 @@ class App extends React.Component {
     }
     this.state = {
       timePeriods: [],
+      currentPeriod: '',
       loggedIn: params.access_token ? true : false,
       nowPlaying: {
         name: "Not Checked",
         image: ''
       },
       currentSongs: [],
+      allSongs: []
     };
   }
 
@@ -30,10 +32,28 @@ class App extends React.Component {
     fetch('http://localhost:3001/time_periods')
     .then(resp => resp.json())
     .then(data => this.setState({ timePeriods: data }))
+    .then(this.fetchSongs())
+  }
+
+  fetchSongs = () => {
+    fetch (`http://localhost:3001/songs`)
+    .then(r => r.json())
+    .then(response => {
+      this.setState({
+        currentSongs: response,
+        allSongs: response
+      })
+    }) 
   }
   
-
-
+  filterSongs = (value) => {
+      this.setState({
+        currentSongs: this.state.allSongs.filter(song => 
+            (new Date(song.favorite_date).getFullYear() === this.state.currentPeriod.getFullYear()) && 
+            (new Date(song.favorite_date).getMonth() === this.state.currentPeriod.getMonth())
+          )
+      })
+  }
 
 getHashParams = () => {
   var hashParams = {};
@@ -45,56 +65,24 @@ getHashParams = () => {
   return hashParams;
 }
 
-getNowPlaying = () => {
-  spotify.getMyCurrentPlaybackState()
-    .then((response) => {
-      this.setState({
-        nowPlaying: {
-          name: response.item.name,
-          image: response.item.album.images[0].url
-        }
-      })
-    })
-}
-
-getRecentlyPlayed = () => {
-  spotify.getMyRecentlyPlayedTracks()
+getUserInfo = () => {
+  spotify.getMe()
     .then((response) => {
       console.log(response)
     })
 };
 
-getMyTopTracks = () => {
-  spotify.getMyTopTracks()
-    .then((response) => {
-      console.log(response)
-    })
-};
 
 getMySavedTracks = () => {
-  // there should be a generate playlist button.
-  // The logic should be to check if a users data is in the db already Skip over this is it is.
-  // The getMySaved Tracks should run until the dateadded is in 2016
   spotify.getMySavedTracks({limit: 50})
   .then((response) => {
     console.log(response)
-    console.log(response.items[0].track.name)
-    console.log(response.items[0].track.artists[0].name)
-    console.log(response.items[0].track.uri)
-    console.log(response.items[0].added_at)
-    console.log(this.getHashParams())
-    console.log(window)
   })
 }
 
 getMySavedTrackswPost = () => {
  spotify.getMySavedTracks({limit: 50})
   .then((response) => {
-    console.log(response)
-    console.log(response.items[0].track.name)
-    console.log(response.items[0].track.artists[0].name)
-    console.log(response.items[0].track.uri)
-    console.log(response.items[0].added_at)
     this.postSongs(response)
   })
 }
@@ -117,8 +105,17 @@ postSongs = (response) => {
  }
 }
 
+setDates = (Year, Month) => {
+  this.setState({
+    currentPeriod: new Date(Year, Month)
+  })
+  console.log(this.state)
+}
 
-render() {
+
+
+ render() {
+
   return (
       <div className="App">
         <a href='http://localhost:8888'>
@@ -130,14 +127,8 @@ render() {
           <div>
             <img src = {this.state.nowPlaying.image} style={{ width: 100}}/>
           </div>
-          <button onClick={() => this.getNowPlaying()}>
-            Now Playing
-          </button>
-          <button onClick={() => this.getRecentlyPlayed()}>
-            Recent Songs
-          </button>
-          <button onClick={() => this.getMyTopTracks()}>
-            Top Tracks
+          <button onClick={() => this.getUserInfo()}>
+            User Info
           </button>
           <button onClick={() => this.getMySavedTracks()}>
             Saved Tracks
@@ -145,7 +136,14 @@ render() {
           <button onClick={() => this.getMySavedTrackswPost()}>
             Saved Tracks with post
           </button>
-        <TimelineContainer timePeriods={this.state.timePeriods}/>
+          <button onClick={() => this.filterSongs()}>
+            Filter Songs
+          </button>
+
+
+        {this.state.currentSongs ? 
+        <SongContainer songs={this.state.currentSongs}/> : null}
+        <TimelineContainer timePeriods={this.state.timePeriods} setDates={this.setDates}/>
       </div> 
   );
   }
