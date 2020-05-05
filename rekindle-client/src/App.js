@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import './App.css';
-import { Timeline, Event } from 'react-trivial-timeline';
+import TimelineContainer from './TimelineContainer'
+
 
 
 import * as SpotifyWebApi from 'spotify-web-api-js';
@@ -17,13 +18,19 @@ class App extends React.Component {
       spotify.setAccessToken(params.access_token)
     }
     this.state = {
+      timePeriods: [],
       loggedIn: params.access_token ? true : false,
       nowPlaying: {
         name: "Not Checked",
         image: ''
       }
     };
+  }
 
+  componentDidMount = () => {
+    fetch('http://localhost:3001/time_periods')
+    .then(resp => resp.json())
+    .then(data => this.setState({ timePeriods: data }))
   }
   
 
@@ -123,14 +130,7 @@ render() {
           <button onClick={() => this.getMySavedTracks()}>
             Saved Tracks
           </button>
-        <Timeline lineColor="black">
-          <Event interval={{ start: 2010 }} title="Event title" subtitle="Subtitle">
-            Content
-          </Event>
-          <Event interval="2016 – 2019" title="Some text">
-            Some content
-          </Event>
-      </Timeline>
+        <TimelineContainer timePeriods={this.state.timePeriods}/>
       </div> 
   );
   }
