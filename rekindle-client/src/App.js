@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import './App.css';
 import { Timeline, Event } from 'react-trivial-timeline';
-
-
 import * as SpotifyWebApi from 'spotify-web-api-js';
+
+import MonthContainer from "./MonthContainer";
 
 let spotify = new SpotifyWebApi();
 
@@ -21,7 +21,9 @@ class App extends React.Component {
       nowPlaying: {
         name: "Not Checked",
         image: ''
-      }
+      },
+      currentSongs: [],
+      timePeriod: []
     };
 
   }
@@ -76,6 +78,19 @@ getMySavedTracks = () => {
     console.log(response.items[0].track.artists[0].name)
     console.log(response.items[0].track.uri)
     console.log(response.items[0].added_at)
+    console.log(this.getHashParams())
+    console.log(window)
+  })
+}
+
+getMySavedTrackswPost = () => {
+ spotify.getMySavedTracks({limit: 50})
+  .then((response) => {
+    console.log(response)
+    console.log(response.items[0].track.name)
+    console.log(response.items[0].track.artists[0].name)
+    console.log(response.items[0].track.uri)
+    console.log(response.items[0].added_at)
     this.postSongs(response)
   })
 }
@@ -123,12 +138,15 @@ render() {
           <button onClick={() => this.getMySavedTracks()}>
             Saved Tracks
           </button>
+          <button onClick={() => this.getMySavedTrackswPost()}>
+            Saved Tracks with post
+          </button>
         <Timeline lineColor="black">
           <Event interval={{ start: 2010 }} title="Event title" subtitle="Subtitle">
             Content
           </Event>
           <Event interval="2016 – 2019" title="Some text">
-            Some content
+            <MonthContainer />
           </Event>
       </Timeline>
       </div> 
