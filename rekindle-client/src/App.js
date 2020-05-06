@@ -10,7 +10,7 @@ let spotify = new SpotifyWebApi();
 
 
 class App extends React.Component {
-  constructor(){
+    constructor(){
     super();
     const params = this.getHashParams();
     if (params.access_token) {
@@ -22,7 +22,9 @@ class App extends React.Component {
       loggedIn: params.access_token ? true : false,
       currentSongs: [],
       allSongs: [],
-      currentUser: ''
+      currentUserSpotify: '',
+      currentUser: []
+
     };
   }
 
@@ -30,9 +32,26 @@ class App extends React.Component {
     fetch('http://localhost:3001/time_periods')
     .then(resp => resp.json())
     .then(data => this.setState({ timePeriods: data }))
-    .then(this.getUserInfo())
-    // also get user info from spotify backend
-    .then(this.fetchSongs())
+    .then(this.getUserInfoSpotify())
+    .then(this.getUserInfoBackend())
+    setTimeout(() => {
+      console.log(this.state.currentUserSpotify.display_name)
+      console.log(this.state.currentUser)
+      if (this.state.currentUser[0]) {
+      if (this.state.currentUserSpotify.display_name === this.state.currentUser[0].name) {
+        (this.fetchSongs())
+      }
+      }
+      else {
+        (this.postUsers())
+        setTimeout(() => { 
+        (this.getMySavedTrackswPost())
+        setTimeout(() => {
+          (this.fetchSongs())
+        }, 5000)
+      }, 1000)
+      }
+    }, 2000);
   }
 
   fetchSongs = () => {
@@ -44,6 +63,43 @@ class App extends React.Component {
       })
     }) 
   }
+
+  getUserInfoSpotify = () => {
+    spotify.getMe()
+      .then((response) => {
+        this.setState({ 
+          currentUserSpotify: response
+        })
+      })
+  };
+
+  getUserInfoBackend = () => {
+    fetch (`http://localhost:3001/users`)
+    .then(r => r.json())
+    .then(response => {
+      console.log(response)
+      console.log(this.state)
+      this.setState({
+        currentUser: response
+      })
+    }) 
+  }
+
+
+  postUsers = () => {
+    fetch (`http://localhost:3001/users`, {
+    method: 'POST',
+    headers: {'content-Type': 'application/json',
+                "accept": "application/json"
+    },
+    body: JSON.stringify({
+        "name": this.state.currentUserSpotify.display_name,
+        "username": this.state.currentUserSpotify.id
+      })
+    })
+   }
+  
+  
   
   filterSongs = (value) => {
       this.setState({
@@ -63,13 +119,6 @@ getHashParams = () => {
   }
   return hashParams;
 }
-
-getUserInfo = () => {
-  spotify.getMe()
-    .then((response) => {
-      console.log(response)
-    })
-};
 
 
 getMySavedTracks = () => {
@@ -124,15 +173,6 @@ setDates = (Year, Month) => {
           <button>Login with Spotify</button>
         </a>
         </div><br></br>
-          <button onClick={() => this.getUserInfo()}>
-            User Info
-          </button>
-          <button onClick={() => this.getMySavedTracks()}>
-            Saved Tracks
-          </button>
-          <button onClick={() => this.getMySavedTrackswPost()}>
-            Saved Tracks with post
-          </button>
 
 
         {this.state.currentSongs ? 
