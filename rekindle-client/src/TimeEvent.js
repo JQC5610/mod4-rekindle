@@ -1,5 +1,9 @@
 import React from 'react'
 import Card from 'react-bootstrap/Card'
+import 'rsuite/lib/styles/index.less';
+import 'rsuite/dist/styles/rsuite-dark.css'
+import { Button } from 'rsuite';
+
 
 let monthObj = 
 {
@@ -29,8 +33,9 @@ const TimeEvent = (props) => {
           <Card.Text>
             {props.timePeriod.month}
           </Card.Text>
+          <Button appearance="primary" onClick={() => props.setDates(props.timePeriod.year, monthObj[props.timePeriod.month])}>Grab Songs</Button>
           <Card.Text></Card.Text>
-            <button onClick={() => props.setDates(props.timePeriod.year, monthObj[props.timePeriod.month])}>Grab Songs</button>
+            
         </Card.ImgOverlay>
       </Card>    
   )

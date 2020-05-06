@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { Button } from 'rsuite';
+import 'rsuite/lib/styles/index.less';
+import 'rsuite/dist/styles/rsuite-dark.css'
 import './App.css';
 import TimelineContainer from './TimelineContainer';
 import SongContainer from './SongContainer';
 import * as SpotifyWebApi from 'spotify-web-api-js';
 
 let spotify = new SpotifyWebApi();
-
 
 
 class App extends React.Component {
@@ -119,25 +120,25 @@ setDates = (Year, Month) => {
 
   return (
       <div className="App">
-        <div>
-        <a href='http://localhost:8888'>
-          <button>Login with Spotify</button>
-        </a>
-        </div><br></br>
-          <button onClick={() => this.getUserInfo()}>
-            User Info
-          </button>
-          <button onClick={() => this.getMySavedTracks()}>
-            Saved Tracks
-          </button>
-          <button onClick={() => this.getMySavedTrackswPost()}>
-            Saved Tracks with post
-          </button>
+          <a href='http://localhost:8888'>
+            <Button appearance="primary">Login with Spotify</Button>
+          </a>
+          
+            <Button appearance="primary" onClick={() => this.getUserInfo()}>
+              User Info
+            </Button>
+            <Button appearance="primary" onClick={() => this.getMySavedTracks()}>
+              Saved Tracks
+            </Button>
+            <Button appearance="primary" onClick={() => this.getMySavedTrackswPost()}>
+              Saved Tracks with post
+            </Button>
+            
 
-
-        {this.state.currentSongs ? 
-        <SongContainer songs={this.state.currentSongs}/> : null}
-        <TimelineContainer timePeriods={this.state.timePeriods} setDates={this.setDates}/>
+          {this.state.currentSongs ? 
+          <SongContainer songs={this.state.currentSongs}/> : null}
+          <TimelineContainer timePeriods={this.state.timePeriods} setDates={this.setDates}/>
+          
       </div> 
   );
   }
