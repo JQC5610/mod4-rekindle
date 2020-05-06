@@ -5,6 +5,7 @@ import 'rsuite/dist/styles/rsuite-dark.css'
 import './App.css';
 import TimelineContainer from './TimelineContainer';
 import SongContainer from './SongContainer';
+import Menu from './Menu'
 import * as SpotifyWebApi from 'spotify-web-api-js';
 
 let spotify = new SpotifyWebApi();
@@ -120,7 +121,12 @@ setDates = (Year, Month) => {
 
   return (
       <div className="App">
-          <a href='http://localhost:8888'>
+        <Menu 
+        onClick={this.getUserInfo}
+        onClick={this.getMySavedTracks}
+        onClick={this.getMySavedTrackswPost}
+        />
+          {/* <a href='http://localhost:8888'>
             <Button appearance="primary">Login with Spotify</Button>
           </a>
           
@@ -132,7 +138,7 @@ setDates = (Year, Month) => {
             </Button>
             <Button appearance="primary" onClick={() => this.getMySavedTrackswPost()}>
               Saved Tracks with post
-            </Button>
+            </Button> */}
             
 
           {this.state.currentSongs ? 
