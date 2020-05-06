@@ -12,8 +12,11 @@ let monthObj =
   July: 6,
   August: 7,
   September: 8,
+  october: 9,
   October: 9,
+  november: 10,
   November: 10,
+  december: 11,
   December: 11
 }
 

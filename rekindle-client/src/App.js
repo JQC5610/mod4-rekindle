@@ -20,12 +20,9 @@ class App extends React.Component {
       timePeriods: [],
       currentPeriod: '',
       loggedIn: params.access_token ? true : false,
-      nowPlaying: {
-        name: "Not Checked",
-        image: ''
-      },
       currentSongs: [],
-      allSongs: []
+      allSongs: [],
+      currentUser: ''
     };
   }
 
@@ -33,6 +30,8 @@ class App extends React.Component {
     fetch('http://localhost:3001/time_periods')
     .then(resp => resp.json())
     .then(data => this.setState({ timePeriods: data }))
+    .then(this.getUserInfo())
+    // also get user info from spotify backend
     .then(this.fetchSongs())
   }
 
@@ -41,7 +40,6 @@ class App extends React.Component {
     .then(r => r.json())
     .then(response => {
       this.setState({
-        currentSongs: response,
         allSongs: response
       })
     }) 
@@ -110,7 +108,8 @@ setDates = (Year, Month) => {
   this.setState({
     currentPeriod: new Date(Year, Month)
   })
-  .then(this.filterSongs())
+  setTimeout(() => { this.filterSongs() }, 1500);
+  setTimeout(() => { console.log(this.state) }, 1000);
 
 }
 
@@ -120,15 +119,11 @@ setDates = (Year, Month) => {
 
   return (
       <div className="App">
+        <div>
         <a href='http://localhost:8888'>
           <button>Login with Spotify</button>
         </a>
-          <div>
-            Now Playing: { this.state.nowPlaying.name } 
-          </div>
-          <div>
-            <img src = {this.state.nowPlaying.image} style={{ width: 100}}/>
-          </div>
+        </div><br></br>
           <button onClick={() => this.getUserInfo()}>
             User Info
           </button>
@@ -137,9 +132,6 @@ setDates = (Year, Month) => {
           </button>
           <button onClick={() => this.getMySavedTrackswPost()}>
             Saved Tracks with post
-          </button>
-          <button onClick={() => this.filterSongs()}>
-            Filter Songs
           </button>
 
 
