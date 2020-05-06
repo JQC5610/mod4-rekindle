@@ -109,7 +109,8 @@ setDates = (Year, Month) => {
   this.setState({
     currentPeriod: new Date(Year, Month)
   })
-  console.log(this.state)
+  .then(this.filterSongs())
+
 }
 
 
