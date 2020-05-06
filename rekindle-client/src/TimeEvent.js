@@ -1,4 +1,5 @@
 import React from 'react'
+import Card from 'react-bootstrap/Card'
 
 let monthObj = 
 {
@@ -18,14 +19,17 @@ let monthObj =
 
 const TimeEvent = (props) => {
   return(
-    <div>
-      <h1> {props.timePeriod.year} </h1>
-        <h3>{props.timePeriod.month}</h3>
-            <img src={props.timePeriod.img_url} alt="month image" width="100%" />
-          <button onClick={() => props.setDates(props.timePeriod.year, monthObj[props.timePeriod.month])}>
-            Set Dates
-          </button>
-    </div>
+      <Card id={props.timePeriod.id} className="bg-dark text-white">
+        <Card.Img src={props.timePeriod.img_url} alt="Card image" className="Month-img"/>
+        <Card.ImgOverlay>
+          <Card.Title>{props.timePeriod.year}</Card.Title>
+          <Card.Text>
+            {props.timePeriod.month}
+          </Card.Text>
+          <Card.Text></Card.Text>
+            <button onClick={() => props.setDates(props.timePeriod.year, monthObj[props.timePeriod.month])}>Grab Songs</button>
+        </Card.ImgOverlay>
+      </Card>    
   )
   };
 
