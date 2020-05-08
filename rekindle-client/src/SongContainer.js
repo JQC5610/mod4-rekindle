@@ -1,8 +1,10 @@
 import React, { Component, Fragment } from 'react';
-import NowPlaying from './NowPlaying'
 import 'rsuite/lib/styles/index.less';
 import 'rsuite/dist/styles/rsuite-dark.css'
 import { Table } from 'rsuite';
+import { List } from 'rsuite';
+import NowPlaying from './NowPlaying';
+
 
 const { Column, HeaderCell, Cell, Pagination } = Table;
 
@@ -11,22 +13,21 @@ class SongContainer extends Component {
 
   constructor() {
     super()
-    this.state = {
-      months: [Date('2019-12-01'), Date('2019-11-01')]
-    }
+  
   }
     render() {
-      const songs = this.props.songs.map(song => <NowPlaying key={song.id} song={song} />)
+      const songs = this.props.songs.map(song => <NowPlaying song={song} key={song.id} />)
         return (
-          <Fragment>
-            {songs}
             <div>
+              <Fragment>
+                {songs}
+              </Fragment>
               <Table
                 height={400}
                 data={this.props.songs}
-                // onRowClick={data => {
-                //   console.log(data);
-                // }}
+                onRowClick={data => {
+                  console.log(data);
+                }}
               >
                 <Column width={70} align="center" fixed>
                   <HeaderCell>Id</HeaderCell>
@@ -58,21 +59,13 @@ class SongContainer extends Component {
                   <HeaderCell>Play Song</HeaderCell>
       
                   <Cell>
-                    {rowData => {
-                      function handleAction() {
-                        alert(`id:${rowData.id}`);
-                      }
-                      return (
-                        <span>
-                          <a onClick={handleAction}> Select </a>
-                        </span>
-                      );
-                    }}
-                  </Cell>
+                    <span>
+                      <a onClick={() => this.props.selectSong(this.props.id)}> Select Song </a>
+                    </span>                                
+                    </Cell>
                 </Column>
               </Table>
-            </div> 
-          </Fragment>         
+            </div>       
         );
     }
   }

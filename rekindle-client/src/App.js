@@ -3,6 +3,7 @@ import { Button } from 'rsuite';
 import 'rsuite/lib/styles/index.less';
 import 'rsuite/dist/styles/rsuite-dark.css'
 import './App.css';
+import Header from './Header'
 import TimelineContainer from './TimelineContainer';
 import SongContainer from './SongContainer';
 import * as SpotifyWebApi from 'spotify-web-api-js';
@@ -147,7 +148,7 @@ postSongs = (response) => {
   body: JSON.stringify({
       "name": response.items[i].track.name,
       "artist": response.items[i].track.artists[0].name,
-      "uri": response.items[i].track.uri,
+      "uri": response.items[i].track.uri.substring(14),
       "favorite_date": response.items[i].added_at,
       "duration": response.items[i].track.duration
     })
@@ -172,9 +173,10 @@ setDates = (Year, Month) => {
 
   return (
       <div className="App">
+        <Header />
         <div>
           <a href='http://localhost:8888'>
-            <Button appearance="primary">Login with Spotify</Button>
+            <Button color="green" appearance="primary">Login with Spotify</Button>
           </a>
         </div>
 
