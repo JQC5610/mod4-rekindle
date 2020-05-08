@@ -149,7 +149,7 @@ postSongs = (response) => {
       "artist": response.items[i].track.artists[0].name,
       "uri": response.items[i].track.uri,
       "favorite_date": response.items[i].added_at,
-      "duration": response.items[i].track.duration_ms
+      "duration": response.items[i].track.duration
     })
   })
  }
@@ -163,6 +163,8 @@ setDates = (Year, Month) => {
   setTimeout(() => { console.log(this.state) }, 1000);
 
 }
+
+
 
 
 
