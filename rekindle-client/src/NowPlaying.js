@@ -8,7 +8,7 @@ class NowPlaying extends Component {
 
     getUri = () => {
         let uri = Array.from(this.props.song.uri)
-        let songUri = uri.splice(0, 7)
+        let songUri = uri.splice(0, 8)
         let formattedUri =  songUri.splice(5, 1, "/")
         let playerUri = formattedUri.join('')
         console.log(playerUri)
