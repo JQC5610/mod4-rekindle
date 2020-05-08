@@ -1,21 +1,43 @@
-import React from 'react'
+// import React, { Fragment } from 'react'
+// import 'rsuite/lib/styles/index.less';
+// import 'rsuite/dist/styles/rsuite-dark.css'
+
+// import { Table } from 'rsuite';
+
+// const { Column, HeaderCell, Cell, Pagination } = Table;
 
 
 
-const Songs = (props) => {
-    {var favorite_date = new Date(props.song.favorite_date)}
-    {var favorite_date_year = favorite_date.getFullYear()}
-    {var favorite_date_month = favorite_date.getMonth()}
-    {var yMCombo = favorite_date_year + '' + favorite_date_month }
 
-  return(
-    <div>
-      <h1> {props.song.name} </h1>
-      <h3> {props.song.artist} </h3>
-      <h3> {props.song.uri}</h3>
-      {yMCombo}<br/>
-    </div>
-  )
-  };
+// class Songs extends React.Component {
+//   render(){
+//       return(
+//         <Fragment>
+// a
+    
+//             {/* <Column width={120} fixed="right">
+//               <HeaderCell>Action</HeaderCell>
+    
+//               <Cell>
+//                 {rowData => {
+//                   function handleAction() {
+//                     alert(`id:${rowData.id}`);
+//                   }
+//                   return (
+//                     <span>
+//                       <a onClick={handleAction}> Edit </a> |{' '}
+//                       <a onClick={handleAction}> Remove </a>
+//                     </span>
+//                   );
+//                 }}
+//               </Cell>
+//             </Column> */}
+//         </Fragment>
+//       );
+//   }
 
-export default Songs;
+//   }
+
+
+
+// export default Songs;

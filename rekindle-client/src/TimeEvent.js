@@ -28,7 +28,7 @@ let monthObj =
 const TimeEvent = (props) => {
   return(
       <Panel shaded bordered bodyFill style={{ display: 'inline-block', width: 240 }}>
-        <img src={props.timePeriod.img_url} height="240" />
+        <img src={props.timePeriod.img_url} alt="playlist img" height="240" />
         <Panel header={props.timePeriod.year}>
           <p>
             <small>{props.timePeriod.month}</small>

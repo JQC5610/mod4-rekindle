@@ -5,7 +5,6 @@ import 'rsuite/dist/styles/rsuite-dark.css'
 import './App.css';
 import TimelineContainer from './TimelineContainer';
 import SongContainer from './SongContainer';
-import Menu from './Menu'
 import * as SpotifyWebApi from 'spotify-web-api-js';
 
 let spotify = new SpotifyWebApi();
@@ -149,7 +148,8 @@ postSongs = (response) => {
       "name": response.items[i].track.name,
       "artist": response.items[i].track.artists[0].name,
       "uri": response.items[i].track.uri,
-      "favorite_date": response.items[i].added_at
+      "favorite_date": response.items[i].added_at,
+      "duration": response.items[i].track.duration_ms
     })
   })
  }
@@ -170,29 +170,17 @@ setDates = (Year, Month) => {
 
   return (
       <div className="App">
-        <Menu 
-        onClick={this.getUserInfo}
-        onClick={this.getMySavedTracks}
-        onClick={this.getMySavedTrackswPost}
-        />
-          {/* <a href='http://localhost:8888'>
+        <div>
+          <a href='http://localhost:8888'>
             <Button appearance="primary">Login with Spotify</Button>
           </a>
-          
-            <Button appearance="primary" onClick={() => this.getUserInfo()}>
-              User Info
-            </Button>
-            <Button appearance="primary" onClick={() => this.getMySavedTracks()}>
-              Saved Tracks
-            </Button>
-            <Button appearance="primary" onClick={() => this.getMySavedTrackswPost()}>
-              Saved Tracks with post
-            </Button> */}
+        </div>
+
             
 
-          {this.state.currentSongs ? 
-          <SongContainer songs={this.state.currentSongs}/> : null}
           <TimelineContainer timePeriods={this.state.timePeriods} setDates={this.setDates}/>
+          {this.state.currentSongs ? 
+          <SongContainer songs={this.state.currentSongs} /> : null}
           
       </div> 
   );
