@@ -9899,9 +9899,9 @@ npm-run-path@^2.0.0:
     path-key "^2.0.0"
 
 npm-user-validate@~1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/npm-user-validate/-/npm-user-validate-1.0.0.tgz#8ceca0f5cea04d4e93519ef72d0557a75122e951"
-  integrity sha1-jOyg9c6gTU6TUZ73LQVXp1Ei6VE=
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/npm-user-validate/-/npm-user-validate-1.0.1.tgz#31428fc5475fe8416023f178c0ab47935ad8c561"
+  integrity sha512-uQwcd/tY+h1jnEaze6cdX/LrhWhoBxfSknxentoqmIuStxUExxjWd3ULMLFPiFUrZKbOVMowH6Jq2FRWfmhcEw==
 
 npm@^6.14.5:
   version "6.14.5"
@@ -11981,6 +11981,13 @@ react-hotkeys@2.0.0:
   integrity sha512-3n3OU8vLX/pfcJrR3xJ1zlww6KS1kEJt0Whxc4FiGV+MJrQ1mYSYI3qS/11d2MJDFm8IhOXMTFQirfu6AVOF6Q==
   dependencies:
     prop-types "^15.6.1"
+
+react-iframe@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/react-iframe/-/react-iframe-1.8.0.tgz#8c78f2c59b894ca5605fa7e45e61e27e57e96091"
+  integrity sha512-NYi89+rEqREwQxW9sDf+akh6/dtwWd3bOjByoVEIQ7SicOxVawRMer3pLdWjFaHXpuxTB9NqobPf/Ohj2iAKkg==
+  dependencies:
+    object-assign "^4.1.1"
 
 react-inspector@^4.0.0:
   version "4.0.1"
