@@ -13,7 +13,7 @@
     "react-dom": "^16.13.1",
     "react-iframe": "^1.8.0",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "^3.4.1",
+    "react-scripts": "^5.0.1",
     "react-trivial-timeline": "^1.2.2",
     "rsuite": "^4.4.1",
     "spotify-web-api-js": "^0.22.1",
@@ -45,10 +45,10 @@
   "devDependencies": {
     "@storybook/addon-actions": "^5.3.18",
     "@storybook/addon-links": "^5.3.18",
-    "@storybook/addon-storyshots": "^5.3.18",
+    "@storybook/addon-storyshots": "^6.5.13",
     "@storybook/addons": "^5.3.18",
     "@storybook/preset-create-react-app": "^2.1.1",
-    "@storybook/react": "^5.3.18",
+    "@storybook/react": "^6.5.13",
     "react-test-renderer": "^16.13.1"
   }
 }
